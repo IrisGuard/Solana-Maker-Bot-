@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Solana Maker Bot
 
 Automate your Solana trading with Solana Maker Bot. Create, manage, and monitor trading bots on the Solana blockchain.
@@ -63,3 +64,6 @@ Copy `.env.example` to `.env` and configure the following variables:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+=======
+# Solana-Maker-Bot-
+>>>>>>> 3a56f5b9c8f05c7bfb92922a3d6957bc35a03056
