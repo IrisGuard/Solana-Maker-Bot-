@@ -11,7 +11,7 @@ export default function BotControl() {
   
   // Initialize Solana connection
   const connection = new Connection(
-    process.env.EXPO_PUBLIC_SOLANA_RPC_ENDPOINT || "https://api.mainnet-beta.solana.com",
+    process.env.EXPO_PUBLIC_SOLANA_RPC_ENDPOINT!, 
     "confirmed"
   );
 
@@ -22,17 +22,17 @@ export default function BotControl() {
   const startTrading = async () => {
     try {
       setIsTrading(true);
-      addLog("Starting trading process...");
+      addLog("🚀 Starting trading process...");
       setStatus("Initializing...");
 
       // 1. Create and save wallet
       setStatus("Creating wallet...");
       const wallet = generateWallet();
-      addLog(`Wallet created: ${wallet.publicKey.toString()}`);
+      addLog(`💰 Wallet created: ${wallet.publicKey.toString()}`);
       
       setStatus("Saving wallet...");
       await saveWallet(wallet);
-      addLog("Wallet saved to Supabase");
+      addLog("💾 Wallet saved to Supabase");
 
       // 2. Get Jupiter quote
       setStatus("Fetching quote...");
@@ -42,14 +42,12 @@ export default function BotControl() {
         100_000_000 // 0.1 SOL in lamports
       );
 
-      if (!quote) {
-        throw new Error("No valid quote received from Jupiter API");
-      }
-      addLog(`Best quote: ${quote.outAmount} HPEPE`);
+      if (!quote) throw new Error("❌ No valid quote received");
+      addLog(`📊 Best quote: ${quote.outAmount} HPEPE`);
 
       // 3. Execute swap
       setStatus("Executing swap...");
-      addLog("Sending transaction to network...");
+      addLog("📨 Sending transaction...");
       
       const txid = await executeSwap(
         quote.swapTransaction,
@@ -57,39 +55,52 @@ export default function BotControl() {
         wallet
       );
       
-      addLog(`✅ Swap successful! Transaction ID: ${txid}`);
-      addLog(`View transaction: https://solscan.io/tx/${txid}`);
-      setStatus("Swap completed successfully");
+      addLog(`✅ Swap successful! TX: ${txid}`);
+      addLog(`🔗 View transaction: https://solscan.io/tx/${txid}`);
+      setStatus("🎉 Swap completed!");
 
     } catch (error: any) {
-      addLog(`❌ Error: ${error.message}`);
+      addLog(`🔥 Error: ${error.message}`);
       console.error("Trading error:", error);
-      setStatus("Failed - check logs");
+      setStatus("❌ Failed - check logs");
     } finally {
       setIsTrading(false);
     }
   };
 
   return (
-    <div className="p-4">
-      <div className="mb-4">
+    <div className="p-4 max-w-2xl mx-auto">
+      <div className="mb-6">
         <button 
           onClick={startTrading} 
           disabled={isTrading}
-          className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400"
+          className={`px-6 py-3 rounded-lg font-bold text-white ${
+            isTrading 
+              ? "bg-gray-400 cursor-not-allowed" 
+              : "bg-green-500 hover:bg-green-600"
+          } transition-colors`}
         >
-          {isTrading ? "Trading in progress..." : "Start Trading Bot"}
+          {isTrading ? "⚡ Trading in progress..." : "🚀 Start Trading Bot"}
         </button>
-        <p className="mt-2 text-sm text-gray-600">Status: {status}</p>
+        <p className="mt-3 text-sm text-gray-500">Status: {status}</p>
       </div>
 
-      <div className="border p-4 rounded max-h-96 overflow-y-auto">
-        <h3 className="font-bold mb-2">Trading Logs:</h3>
-        {logs.map((log, index) => (
-          <div key={index} className="text-sm font-mono p-1 even:bg-gray-50">
-            {log}
-          </div>
-        ))}
+      <div className="border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
+        <h3 className="text-lg font-semibold mb-3">📜 Trading Logs</h3>
+        <div className="space-y-2 h-64 overflow-y-auto">
+          {logs.map((log, index) => (
+            <div 
+              key={index}
+              className={`p-2 rounded text-sm font-mono ${
+                log.includes("✅") ? "bg-green-50 text-green-700" :
+                log.includes("❌") ? "bg-red-50 text-red-700" :
+                "bg-gray-50 text-gray-600"
+              }`}
+            >
+              {log}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
