@@ -1,12 +1,19 @@
 // app/bot-control/index.tsx
 import { useState } from "react";
-import { getJupiterQuote } from "../../utils/jupiter";
+import { Connection, Keypair } from "@solana/web3.js";
+import { getJupiterQuote, executeSwap } from "../../utils/jupiter";
 import { generateWallet, saveWallet } from "../../utils/walletFactory";
 
 export default function BotControl() {
   const [isTrading, setIsTrading] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
   const [status, setStatus] = useState("");
+  
+  // Initialize Solana connection
+  const connection = new Connection(
+    process.env.EXPO_PUBLIC_SOLANA_RPC_ENDPOINT || "https://api.mainnet-beta.solana.com",
+    "confirmed"
+  );
 
   const addLog = (message: string) => {
     setLogs(prev => [message, ...prev]);
@@ -16,39 +23,49 @@ export default function BotControl() {
     try {
       setIsTrading(true);
       addLog("Starting trading process...");
+      setStatus("Initializing...");
 
-      // Wallet creation
+      // 1. Create and save wallet
       setStatus("Creating wallet...");
       const wallet = generateWallet();
       addLog(`Wallet created: ${wallet.publicKey.toString()}`);
-
-      // Save wallet
+      
       setStatus("Saving wallet...");
       await saveWallet(wallet);
       addLog("Wallet saved to Supabase");
 
-      // Get quote
+      // 2. Get Jupiter quote
       setStatus("Fetching quote...");
       const quote = await getJupiterQuote(
-        "So11111111111111111111111111111111111111112",
-        "8PZn1LKTfJSBgnDb4JzhMD9DdvhnE9GA61dKwZr5YUTE",
-        100_000_000
+        "So11111111111111111111111111111111111111112", // SOL
+        "8PZn1LKTfJSBgnDb4JzhMD9DdvhnE9GA61dKwZr5YUTE", // HPEPE
+        100_000_000 // 0.1 SOL in lamports
       );
 
       if (!quote) {
-        throw new Error("No valid quote received");
+        throw new Error("No valid quote received from Jupiter API");
       }
-
       addLog(`Best quote: ${quote.outAmount} HPEPE`);
-      setStatus("Ready to execute trade...");
+
+      // 3. Execute swap
+      setStatus("Executing swap...");
+      addLog("Sending transaction to network...");
       
-      // TODO: Add trade execution logic here
+      const txid = await executeSwap(
+        quote.swapTransaction,
+        connection,
+        wallet
+      );
+      
+      addLog(`✅ Swap successful! Transaction ID: ${txid}`);
+      addLog(`View transaction: https://solscan.io/tx/${txid}`);
+      setStatus("Swap completed successfully");
 
     } catch (error: any) {
       addLog(`❌ Error: ${error.message}`);
       console.error("Trading error:", error);
+      setStatus("Failed - check logs");
     } finally {
-      setStatus("Trading process completed");
       setIsTrading(false);
     }
   };
