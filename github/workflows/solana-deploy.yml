@@ -1,0 +1,27 @@
+name: Solana Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      priority_fee:
+        description: "Priority fee for transactions"
+        required: true
+        default: "300000"
+
+jobs:
+  deploy:
+    uses: solana-developers/github-workflows/.github/workflows/reusable-build.yaml@v0.2.5
+    with:
+      program: "solana-maker-bot"
+      network: "mainnet"
+      deploy: true
+      upload_idl: true
+      verify: true
+      use-squads: true
+      priority-fee: ${{ github.event.inputs.priority_fee }}
+    secrets:
+      MAINNET_SOLANA_DEPLOY_URL: ${{ secrets.MAINNET_SOLANA_DEPLOY_URL }}
+      MAINNET_DEPLOYER_KEYPAIR: ${{ secrets.MAINNET_DEPLOYER_KEYPAIR }}
+      PROGRAM_ADDRESS_KEYPAIR: ${{ secrets.PROGRAM_ADDRESS_KEYPAIR }}
+      MAINNET_MULTISIG: ${{ secrets.MAINNET_MULTISIG }}
+      MAINNET_MULTISIG_VAULT: ${{ secrets.MAINNET_MULTISIG_VAULT }}
