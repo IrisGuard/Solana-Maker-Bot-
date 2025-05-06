@@ -232,4 +232,9 @@ If you encounter issues with table creation:
 1. Check for error messages in the SQL Editor
 2. Verify you have the necessary permissions
 3. Try running the individual CREATE TABLE statements separately
+
+
+
+
 4. Use the fallback `execute_sql` function if needed
+  
