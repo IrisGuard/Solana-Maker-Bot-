@@ -186,15 +186,6 @@ class SolscanApi {
       // If API call fails, try Binance API
       try {
         console.log("Trying Binance API for Solana price...");
-        const binanceController = new AbortController();
-        const binanceTimeoutId = setTimeout(() => binanceController.abort(), 15000); // Increased from 10s to 15s
-        
-        const binanceResponse = await fetch(
-          'https://api.binance.com/api/v3/ticker/24hr?symbol=SOLUSDT',
-          { signal: binanceController.signal }
-        );
-        
-        clearTimeout(binanceTimeoutId);
         
         if (binanceResponse.ok) {
           const binanceData = await binanceResponse.json();
