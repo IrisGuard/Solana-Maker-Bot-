@@ -364,14 +364,15 @@ class CoinGeckoApi {
       
       return new Promise(resolve => {
         setTimeout(async () => {
-          try {
-            const result = await apiCall();
-            this.retryCount = 0; // Reset retry count on success
-            resolve(result);
-          } catch (retryError) {
-            resolve(this.handleApiError(retryError, apiCall));
-          }
-        }, backoffTime);
+  try {
+    const result = await apiCall();
+    this.retryCount = 0;
+    resolve(result);
+  } catch (retryError) {
+    resolve(this.handleApiError(retryError, apiCall));
+  }
+}, Number(backoffTime) || 5000);
+
       });
     }
     
