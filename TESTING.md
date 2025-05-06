@@ -135,5 +135,6 @@ When reporting issues, please include:
 - Device information (OS, model, etc.)
 - Error messages (if any)
 
-Submit issues to the GitHub repository or contact support@symfonny.com.
+Submit issues to the GitHub repository or contact <support@symfonny.com>.
+
 
