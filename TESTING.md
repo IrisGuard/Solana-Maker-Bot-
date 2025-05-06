@@ -136,3 +136,4 @@ When reporting issues, please include:
 - Error messages (if any)
 
 Submit issues to the GitHub repository or contact support@symfonny.com.
+
