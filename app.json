@@ -7,7 +7,6 @@
     "icon": "./assets/images/icon.png",
     "scheme": "solana-maker-bot",
     "userInterfaceStyle": "automatic",
-    "entryPoint": "./app.tsx",
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
