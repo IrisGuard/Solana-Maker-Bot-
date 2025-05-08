@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Disable SWC in favor of Babel
+  swcMinify: false,
+  compiler: {
+    // Enables the styled-components SWC transform
+    styledComponents: true
+  },
   webpack: (config, { isServer }) => {
     // Handle problematic modules
     config.resolve.alias = {
