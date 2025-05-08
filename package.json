@@ -8,40 +8,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@solana/wallet-adapter-base": "^0.9.26",
-    "@solana/wallet-adapter-react": "^0.15.38",
-    "@solana/wallet-adapter-react-ui": "^0.9.38",
-    "@solana/wallet-adapter-wallets": "^0.19.36",
-    "@solana/web3.js": "^1.98.2",
-    "@supabase/supabase-js": "^2.49.4",
-    "@tanstack/react-query": "^5.75.1",
-    "@trpc/client": "^11.1.2",
-    "@trpc/next": "^11.1.2",
-    "@trpc/react-query": "^11.1.2",
-    "@trpc/server": "^11.1.2",
-    "axios": "^1.9.0",
-    "lucide-react": "^0.325.0",
-    "next": "13.4.19",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "superjson": "^2.2.2",
-    "zod": "^3.24.3",
-    "zustand": "^5.0.2"
+    "next": "12.3.4",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "axios": "^0.27.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@next/swc-win32-x64-msvc": "^15.3.2",
-    "@types/node": "^20.11.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "autoprefixer": "^10.4.16",
-    "crypto-browserify": "^3.12.0",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "13.4.19",
-    "path-browserify": "^1.0.1",
-    "postcss": "^8.4.32",
-    "stream-browserify": "^3.0.0",
-    "tailwindcss": "^3.4.0",
-    "typescript": "~5.3.3"
+    "@types/node": "^18.11.9",
+    "@types/react": "^17.0.52",
+    "eslint": "^8.27.0",
+    "eslint-config-next": "12.3.4",
+    "typescript": "^4.8.4"
   }
 }
