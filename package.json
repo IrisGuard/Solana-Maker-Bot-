@@ -9,7 +9,9 @@
     "start-simple": "expo start"
   },
   "dependencies": {
+    "@expo/next-adapter": "^6.0.0",
     "@expo/vector-icons": "^14.0.2",
+    "@expo/webpack-config": "^18.1.3",
     "@hono/node-server": "^1.14.1",
     "@hono/trpc-server": "^0.3.4",
     "@react-native-async-storage/async-storage": "1.23.1",
