@@ -1,5 +1,5 @@
 module.exports = { 
-  presets: ["@expo/next-adapter/babel"],
+  presets: ["babel-preset-expo"],
   plugins: [
     [
       "module-resolver",
@@ -18,6 +18,9 @@ module.exports = {
           "react-native-webview": false,
           "react-native-ble-plx": false,
           "@ledgerhq/hw-transport-node-hid": false,
+          
+          // Use our local shims
+          "@expo/next-adapter/babel": "./lib/expo-next-adapter-shim.js",
           
           // Redirect Solana wallet adapter imports to our mock implementation
           "@solana/wallet-adapter-base": "./lib/solana-adapters.js",

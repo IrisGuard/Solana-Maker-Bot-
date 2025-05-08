@@ -1,13 +1,16 @@
 {
-  "buildCommand": "expo export -p web",
-  "outputDirectory": "dist",
-  "devCommand": "expo",
+  "buildCommand": "npx next build",
+  "outputDirectory": ".next",
+  "devCommand": "npx next dev",
   "cleanUrls": true,
-  "framework": null,
+  "framework": "nextjs",
   "rewrites": [
     {
       "source": "/:path*",
       "destination": "/"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
