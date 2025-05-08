@@ -14,7 +14,7 @@ import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
   PhantomWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
-import WalletTokens from './WalletTokens';
+import WalletTokens from '@/components/WalletTokens';
 
 export default function WalletScreen() {
   const router = useRouter();
