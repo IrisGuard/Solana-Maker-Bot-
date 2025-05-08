@@ -1,16 +1,6 @@
 {
-  "buildCommand": "npx next build",
-  "outputDirectory": ".next",
-  "devCommand": "npx next dev",
-  "cleanUrls": true,
-  "framework": "nextjs",
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "destination": "/"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "version": 2,
+  "framework": null,
+  "public": true,
+  "outputDirectory": "public"
 }
