@@ -1,5 +1,6 @@
 import { getApiKeys } from '../../services/config';
 import { CONFIG } from '../../services/config';
+import { API_KEYS } from '../../services/api-keys';
 
 // Εδώ θα μπορούσαμε να χρησιμοποιήσουμε μια βάση δεδομένων σε παραγωγικό περιβάλλον
 // Για αυτή την εφαρμογή, χρησιμοποιούμε ένα απλό αντικείμενο για αποθήκευση της κατάστασης
@@ -17,12 +18,17 @@ const botState = {
 
 export default async function handler(req, res) {
   try {
-    // Λήψη των API keys
-    const { rorkAppKey, rorkAppSecret } = getApiKeys();
+    // Έλεγχος αν έχουμε τα απαραίτητα Supabase API keys
+    const supabaseUrl = API_KEYS.EXPO_PUBLIC_SUPABASE_URL;
+    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY;
     
-    // Βασική επαλήθευση API key (σε παραγωγικό περιβάλλον θα χρειαζόταν πιο ασφαλής μέθοδος)
-    if (req.method === 'POST' && (!rorkAppKey || rorkAppKey === 'το-κλειδί-σας-εδώ')) {
-      // Αν δεν έχει οριστεί το κλειδί API, επιτρέπουμε τις αλλαγές μόνο σε περιβάλλον προσομοίωσης
+    // Απλός έλεγχος αν τα API keys είναι διαθέσιμα (δεν κάνουμε πραγματική σύνδεση προς το παρόν)
+    const hasValidKeys = supabaseUrl && supabaseKey && 
+                        supabaseUrl.includes('supabase.co') && 
+                        supabaseKey.length > 20;
+    
+    // Για το POST request, επιτρέπουμε τις αλλαγές μόνο σε simulation mode αν δεν έχουμε έγκυρα κλειδιά
+    if (req.method === 'POST' && !hasValidKeys) {
       botState.simulationMode = true;
     }
     
@@ -43,7 +49,10 @@ export default async function handler(req, res) {
       }
       
       // Επιστρέφουμε την τρέχουσα κατάσταση
-      res.status(200).json(botState);
+      res.status(200).json({
+        ...botState,
+        apiConnected: hasValidKeys
+      });
     } else if (req.method === 'POST') {
       // Ενημερώνουμε την κατάσταση με βάση το request body
       const { status, simulationMode, maxTransactionsPerDay, autoBoost } = req.body;
@@ -73,7 +82,10 @@ export default async function handler(req, res) {
       botState.lastUpdated = Date.now();
       
       // Επιστρέφουμε την ενημερωμένη κατάσταση
-      res.status(200).json(botState);
+      res.status(200).json({
+        ...botState,
+        apiConnected: hasValidKeys
+      });
     } else {
       res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).end(`Method ${req.method} Not Allowed`);

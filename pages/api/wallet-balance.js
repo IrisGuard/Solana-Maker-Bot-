@@ -1,10 +1,10 @@
-import { getApiKeys } from '../../services/config';
 import { API_KEYS } from '../../services/api-keys';
 
 export default async function handler(req, res) {
   try {
-    // Λήψη των API keys
-    const { rorkAppKey } = getApiKeys();
+    // Έλεγχος αν έχουμε τα απαραίτητα Supabase API keys
+    const supabaseUrl = API_KEYS.EXPO_PUBLIC_SUPABASE_URL;
+    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY;
     
     // Έλεγχος αν παρέχεται η διεύθυνση του πορτοφολιού
     const { address } = req.query;
@@ -61,7 +61,8 @@ export default async function handler(req, res) {
         balance: Math.floor(hpepeBalance),
         usdValue: (hpepeBalance * 0.00001).toFixed(2)
       },
-      tokens
+      tokens,
+      walletConnected: true
     });
   } catch (error) {
     console.error('API error:', error);

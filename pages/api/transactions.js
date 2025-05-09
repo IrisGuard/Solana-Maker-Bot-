@@ -1,10 +1,16 @@
 import { getTransactionHistory } from './make-transaction';
-import { getApiKeys } from '../../services/config';
+import { API_KEYS } from '../../services/api-keys';
 
 export default async function handler(req, res) {
   try {
-    // Λήψη των API keys
-    const { rorkAppKey } = getApiKeys();
+    // Έλεγχος αν έχουμε τα απαραίτητα Supabase API keys
+    const supabaseUrl = API_KEYS.EXPO_PUBLIC_SUPABASE_URL;
+    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY;
+    
+    // Απλός έλεγχος αν τα API keys είναι διαθέσιμα
+    const hasValidKeys = supabaseUrl && supabaseKey && 
+                         supabaseUrl.includes('supabase.co') && 
+                         supabaseKey.length > 20;
     
     // Λήψη παραμέτρων φιλτραρίσματος από το query
     const { walletAddress, tokenSymbol, limit = 20, page = 1 } = req.query;
@@ -45,7 +51,8 @@ export default async function handler(req, res) {
           totalPages: 1,
           currentPage: 1,
           limit: parseInt(limit)
-        }
+        },
+        apiConnected: hasValidKeys
       });
     }
     
@@ -57,7 +64,8 @@ export default async function handler(req, res) {
         totalPages,
         currentPage: parseInt(page),
         limit: parseInt(limit)
-      }
+      },
+      apiConnected: hasValidKeys
     });
   } catch (error) {
     console.error('API error:', error);

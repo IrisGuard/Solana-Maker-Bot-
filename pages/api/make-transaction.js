@@ -1,4 +1,3 @@
-import { getApiKeys } from '../../services/config';
 import { CONFIG } from '../../services/config';
 import { API_KEYS } from '../../services/api-keys';
 
@@ -12,8 +11,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Λήψη των API keys
-    const { rorkAppKey, rorkAppSecret } = getApiKeys();
+    // Έλεγχος αν έχουμε τα απαραίτητα Supabase API keys
+    const supabaseUrl = API_KEYS.EXPO_PUBLIC_SUPABASE_URL;
+    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY;
+    
+    // Απλός έλεγχος αν τα API keys είναι διαθέσιμα
+    const hasValidKeys = supabaseUrl && supabaseKey && 
+                         supabaseUrl.includes('supabase.co') && 
+                         supabaseKey.length > 20;
     
     // Έλεγχος αν υπάρχουν τα απαιτούμενα πεδία στο request
     const { 
@@ -85,7 +90,8 @@ export default async function handler(req, res) {
     // Επιστροφή επιτυχημένης απάντησης
     res.status(200).json({
       success: true,
-      transaction
+      transaction,
+      apiConnected: hasValidKeys
     });
   } catch (error) {
     console.error('API error:', error);

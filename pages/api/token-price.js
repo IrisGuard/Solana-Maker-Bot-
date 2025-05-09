@@ -1,11 +1,7 @@
-import { getApiKeys } from '../../services/config';
 import { API_KEYS } from '../../services/api-keys';
 
 export default async function handler(req, res) {
   try {
-    // Λήψη των API keys
-    const { rorkAppKey } = getApiKeys();
-    
     // Χρήση των CoinGecko API για πραγματικές τιμές αν υπάρχει το κλειδί
     if (API_KEYS.EXPO_PUBLIC_COINGECKO_API_KEY) {
       try {
