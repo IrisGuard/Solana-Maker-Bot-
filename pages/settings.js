@@ -1,38 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useWallet } from '@solana/wallet-adapter-react';
 import styles from '../styles/Dashboard.module.css';
+import { setApiKeys, getApiKeys } from '../services/config';
 
 export default function Settings() {
   const router = useRouter();
+  const wallet = useWallet();
   const [walletConnected, setWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("A2Rw7x...Z23u");
   
-  // Ρυθμίσεις εφαρμογής
-  const [settings, setSettings] = useState({
-    // Γενικές ρυθμίσεις
-    simulationMode: true,
-    darkMode: true,
-    language: 'el',
-    
-    // Ρυθμίσεις Bot
-    maxTransactionsPerDay: 100,
-    minDelay: 5,
-    maxDelay: 10,
-    autoBoost: false,
-    
-    // Ρυθμίσεις API
-    apiEndpoint: 'https://api.mainnet-beta.solana.com',
-    apiKey: '',
-    
-    // Ρυθμίσεις ασφάλειας
-    confirmTransactions: true,
-    transactionLimit: 1.0, // SOL
-    notifications: true
-  });
+  // Κατάσταση για τις ρυθμίσεις
+  const [theme, setTheme] = useState('dark');
+  const [language, setLanguage] = useState('el');
+  const [rpcEndpoint, setRpcEndpoint] = useState('https://api.mainnet-beta.solana.com');
+  
+  // Κλειδιά API
+  const [rorkApiKey, setRorkApiKey] = useState('');
+  const [rorkApiSecret, setRorkApiSecret] = useState('');
+  const [showApiSecret, setShowApiSecret] = useState(false);
+  
+  // Simulation mode
+  const [simulationMode, setSimulationMode] = useState(true);
+  
+  // Transaction settings
+  const [minDelay, setMinDelay] = useState(5);
+  const [maxDelay, setMaxDelay] = useState(30);
+  const [transactionsPerDay, setTransactionsPerDay] = useState(100);
+  const [transactionLimit, setTransactionLimit] = useState(1.0);
   
   const [activeTab, setActiveTab] = useState('general');
-  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  
+  // Φόρτωση ρυθμίσεων
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Λήψη αποθηκευμένων ρυθμίσεων
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      const savedLanguage = localStorage.getItem('language') || 'el';
+      const savedRpcEndpoint = localStorage.getItem('rpc_endpoint') || 'https://api.mainnet-beta.solana.com';
+      const savedSimulationMode = localStorage.getItem('simulation_mode') !== 'false';
+      const savedMinDelay = parseInt(localStorage.getItem('min_delay') || '5');
+      const savedMaxDelay = parseInt(localStorage.getItem('max_delay') || '30');
+      const savedTransactionsPerDay = parseInt(localStorage.getItem('transactions_per_day') || '100');
+      const savedTransactionLimit = parseFloat(localStorage.getItem('transaction_limit') || '1.0');
+      
+      // Ρύθμιση της κατάστασης
+      setTheme(savedTheme);
+      setLanguage(savedLanguage);
+      setRpcEndpoint(savedRpcEndpoint);
+      setSimulationMode(savedSimulationMode);
+      setMinDelay(savedMinDelay);
+      setMaxDelay(savedMaxDelay);
+      setTransactionsPerDay(savedTransactionsPerDay);
+      setTransactionLimit(savedTransactionLimit);
+      
+      // Λήψη κλειδιών API
+      const { rorkAppKey, rorkAppSecret } = getApiKeys();
+      if (rorkAppKey) setRorkApiKey(rorkAppKey);
+      if (rorkAppSecret) setRorkApiSecret(rorkAppSecret);
+    }
+  }, []);
   
   const connectWallet = async () => {
     setWalletConnected(true);
@@ -40,37 +68,40 @@ export default function Settings() {
     alert("Στην πλήρη έκδοση, εδώ θα συνδεόσασταν με το Phantom ή άλλο Solana wallet.");
   };
   
-  const handleChange = (section, setting, value) => {
-    setSettings(prevSettings => ({
-      ...prevSettings,
-      [setting]: value
-    }));
-  };
-  
   const saveSettings = () => {
-    // Εδώ θα αποθηκεύονταν οι ρυθμίσεις σε κάποιο API ή local storage
-    alert("Οι ρυθμίσεις αποθηκεύτηκαν επιτυχώς!");
+    if (typeof window !== 'undefined') {
+      // Αποθήκευση ρυθμίσεων
+      localStorage.setItem('theme', theme);
+      localStorage.setItem('language', language);
+      localStorage.setItem('rpc_endpoint', rpcEndpoint);
+      localStorage.setItem('simulation_mode', simulationMode.toString());
+      localStorage.setItem('min_delay', minDelay.toString());
+      localStorage.setItem('max_delay', maxDelay.toString());
+      localStorage.setItem('transactions_per_day', transactionsPerDay.toString());
+      localStorage.setItem('transaction_limit', transactionLimit.toString());
+      
+      // Αποθήκευση κλειδιών API
+      if (rorkApiKey && rorkApiSecret) {
+        setApiKeys(rorkApiKey, rorkApiSecret);
+      }
+      
+      alert('Οι ρυθμίσεις αποθηκεύτηκαν!');
+    }
   };
   
   const resetSettings = () => {
-    // Επαναφορά στις προεπιλεγμένες ρυθμίσεις
-    setSettings({
-      simulationMode: true,
-      darkMode: true,
-      language: 'el',
-      maxTransactionsPerDay: 100,
-      minDelay: 5,
-      maxDelay: 10,
-      autoBoost: false,
-      apiEndpoint: 'https://api.mainnet-beta.solana.com',
-      apiKey: '',
-      confirmTransactions: true,
-      transactionLimit: 1.0,
-      notifications: true
-    });
-    
-    setShowResetConfirm(false);
-    alert("Οι ρυθμίσεις επαναφέρθηκαν στις προεπιλεγμένες τιμές.");
+    if (confirm('Είστε βέβαιοι ότι θέλετε να επαναφέρετε τις προεπιλεγμένες ρυθμίσεις;')) {
+      setTheme('dark');
+      setLanguage('el');
+      setRpcEndpoint('https://api.mainnet-beta.solana.com');
+      setSimulationMode(true);
+      setMinDelay(5);
+      setMaxDelay(30);
+      setTransactionsPerDay(100);
+      setTransactionLimit(1.0);
+      
+      // Δεν επαναφέρουμε τα κλειδιά API κατά την επαναφορά
+    }
   };
 
   return (
@@ -148,7 +179,7 @@ export default function Settings() {
                     <span>Λειτουργία Προσομοίωσης</span>
                     <span className={styles.settingDesc}>Οι συναλλαγές δεν πραγματοποιούνται στο blockchain</span>
                   </div>
-                  <div className={`${styles.toggle} ${settings.simulationMode ? styles.toggleActive : ''}`} onClick={() => handleChange('general', 'simulationMode', !settings.simulationMode)}>
+                  <div className={`${styles.toggle} ${simulationMode ? styles.toggleActive : ''}`} onClick={() => setSimulationMode(!simulationMode)}>
                     <div className={styles.toggleHandle}></div>
                   </div>
                 </div>
@@ -158,7 +189,7 @@ export default function Settings() {
                     <span>Σκούρο Θέμα</span>
                     <span className={styles.settingDesc}>Εμφάνιση της εφαρμογής με σκούρα χρώματα</span>
                   </div>
-                  <div className={`${styles.toggle} ${settings.darkMode ? styles.toggleActive : ''}`} onClick={() => handleChange('general', 'darkMode', !settings.darkMode)}>
+                  <div className={`${styles.toggle} ${theme === 'dark' ? styles.toggleActive : ''}`} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
                     <div className={styles.toggleHandle}></div>
                   </div>
                 </div>
@@ -171,8 +202,8 @@ export default function Settings() {
                   <div className={styles.settingControl}>
                     <select 
                       className={styles.select}
-                      value={settings.language}
-                      onChange={(e) => handleChange('general', 'language', e.target.value)}
+                      value={language}
+                      onChange={(e) => setLanguage(e.target.value)}
                     >
                       <option value="el">Ελληνικά</option>
                       <option value="en">English</option>
@@ -197,8 +228,8 @@ export default function Settings() {
                       className={styles.input}
                       min="1" 
                       max="1000"
-                      value={settings.maxTransactionsPerDay}
-                      onChange={(e) => handleChange('bot', 'maxTransactionsPerDay', parseInt(e.target.value))}
+                      value={transactionsPerDay}
+                      onChange={(e) => setTransactionsPerDay(parseInt(e.target.value))}
                     />
                   </div>
                 </div>
@@ -214,8 +245,8 @@ export default function Settings() {
                       className={styles.input}
                       min="1" 
                       max="3600"
-                      value={settings.minDelay}
-                      onChange={(e) => handleChange('bot', 'minDelay', parseInt(e.target.value))}
+                      value={minDelay}
+                      onChange={(e) => setMinDelay(parseInt(e.target.value))}
                     />
                   </div>
                 </div>
@@ -229,21 +260,11 @@ export default function Settings() {
                     <input 
                       type="number" 
                       className={styles.input}
-                      min="1" 
+                      min={minDelay}
                       max="3600"
-                      value={settings.maxDelay}
-                      onChange={(e) => handleChange('bot', 'maxDelay', parseInt(e.target.value))}
+                      value={maxDelay}
+                      onChange={(e) => setMaxDelay(parseInt(e.target.value))}
                     />
-                  </div>
-                </div>
-                
-                <div className={styles.settingItem}>
-                  <div className={styles.settingLabel}>
-                    <span>Αυτόματη ενίσχυση</span>
-                    <span className={styles.settingDesc}>Αυτόματη αύξηση τιμής με μικρές ενισχύσεις</span>
-                  </div>
-                  <div className={`${styles.toggle} ${settings.autoBoost ? styles.toggleActive : ''}`} onClick={() => handleChange('bot', 'autoBoost', !settings.autoBoost)}>
-                    <div className={styles.toggleHandle}></div>
                   </div>
                 </div>
               </div>
@@ -262,8 +283,8 @@ export default function Settings() {
                     <input 
                       type="text" 
                       className={styles.input}
-                      value={settings.apiEndpoint}
-                      onChange={(e) => handleChange('api', 'apiEndpoint', e.target.value)}
+                      value={rpcEndpoint}
+                      onChange={(e) => setRpcEndpoint(e.target.value)}
                     />
                   </div>
                 </div>
@@ -277,8 +298,8 @@ export default function Settings() {
                     <input 
                       type="password" 
                       className={styles.input}
-                      value={settings.apiKey}
-                      onChange={(e) => handleChange('api', 'apiKey', e.target.value)}
+                      value={rorkApiKey}
+                      onChange={(e) => setRorkApiKey(e.target.value)}
                     />
                   </div>
                 </div>
@@ -298,7 +319,7 @@ export default function Settings() {
                     <span>Επιβεβαίωση Συναλλαγών</span>
                     <span className={styles.settingDesc}>Ζήτηση επιβεβαίωσης πριν την εκτέλεση συναλλαγών</span>
                   </div>
-                  <div className={`${styles.toggle} ${settings.confirmTransactions ? styles.toggleActive : ''}`} onClick={() => handleChange('security', 'confirmTransactions', !settings.confirmTransactions)}>
+                  <div className={`${styles.toggle} ${transactionLimit > 0 ? styles.toggleActive : ''}`} onClick={() => setTransactionLimit(transactionLimit > 0 ? 0 : 1.0)}>
                     <div className={styles.toggleHandle}></div>
                   </div>
                 </div>
@@ -313,24 +334,10 @@ export default function Settings() {
                       type="number" 
                       step="0.1"
                       className={styles.input}
-                      value={settings.transactionLimit}
-                      onChange={(e) => handleChange('security', 'transactionLimit', parseFloat(e.target.value))}
+                      value={transactionLimit}
+                      onChange={(e) => setTransactionLimit(parseFloat(e.target.value))}
                     />
                   </div>
-                </div>
-                
-                <div className={styles.settingItem}>
-                  <div className={styles.settingLabel}>
-                    <span>Ειδοποιήσεις</span>
-                    <span className={styles.settingDesc}>Λήψη ειδοποιήσεων για τις συναλλαγές και τη λειτουργία του bot</span>
-                  </div>
-                  <div className={`${styles.toggle} ${settings.notifications ? styles.toggleActive : ''}`} onClick={() => handleChange('security', 'notifications', !settings.notifications)}>
-                    <div className={styles.toggleHandle}></div>
-                  </div>
-                </div>
-                
-                <div className={styles.settingNote}>
-                  <p className={styles.securityNote}>⚠️ Προσοχή: Απενεργοποιώντας τις επιβεβαιώσεις συναλλαγών ή αυξάνοντας το όριο συναλλαγών, αυξάνεται ο κίνδυνος απώλειας κεφαλαίων.</p>
                 </div>
               </div>
             )}
@@ -339,7 +346,7 @@ export default function Settings() {
           <div className={styles.settingsActions}>
             <button 
               className={`${styles.button} ${styles.dangerButton}`}
-              onClick={() => setShowResetConfirm(true)}
+              onClick={resetSettings}
             >
               Επαναφορά Προεπιλογών
             </button>
@@ -351,30 +358,6 @@ export default function Settings() {
               Αποθήκευση Ρυθμίσεων
             </button>
           </div>
-          
-          {showResetConfirm && (
-            <div className={styles.confirmationModal}>
-              <div className={styles.confirmationContent}>
-                <h3>Επιβεβαίωση Επαναφοράς</h3>
-                <p>Είστε βέβαιοι ότι θέλετε να επαναφέρετε όλες τις ρυθμίσεις στις προεπιλεγμένες τιμές; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</p>
-                <div className={styles.confirmationActions}>
-                  <button 
-                    className={`${styles.button} ${styles.secondaryButton}`}
-                    onClick={() => setShowResetConfirm(false)}
-                  >
-                    Ακύρωση
-                  </button>
-                  
-                  <button 
-                    className={`${styles.button} ${styles.dangerButton}`}
-                    onClick={resetSettings}
-                  >
-                    Επαναφορά
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
         
         {/* Settings Information */}

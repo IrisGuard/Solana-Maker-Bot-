@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
-import { PhantomWalletAdapter, SolflareWalletAdapter, BackpackWalletAdapter, LedgerWalletAdapter } from '@solana/wallet-adapter-wallets';
+import { PhantomWalletAdapter, SolflareWalletAdapter, LedgerWalletAdapter } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl } from '@solana/web3.js';
 
 // Default styles
@@ -36,7 +36,6 @@ export const WalletConnectionProvider = ({ children, network = WalletAdapterNetw
     () => [
       new PhantomWalletAdapter(),
       new SolflareWalletAdapter({ network }),
-      new BackpackWalletAdapter(),
       new LedgerWalletAdapter()
     ],
     [network]
