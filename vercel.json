@@ -2,5 +2,11 @@
   "version": 2,
   "framework": "nextjs",
   "buildCommand": "npm run build",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "rewrites": [
+    { "source": "/greek-dashboard", "destination": "/greek-dashboard" },
+    { "source": "/greek-bot-control", "destination": "/greek-bot-control" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ],
+  "trailingSlash": false
 }
