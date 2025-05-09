@@ -46,6 +46,26 @@ Copy `.env.example` to `.env` and configure the following variables:
 - `EXPO_PUBLIC_ENABLE_REAL_TRANSACTIONS`: Enable real transactions
 - `EXPO_PUBLIC_SIMULATION_MODE`: Enable simulation mode
 
+## API Keys Configuration
+
+For the application to work properly, you need to configure your API keys:
+
+1. Edit `services/api-keys.js` and add your RORK.app keys:
+   ```javascript
+   // RORK.app API Keys
+   RORK_APP_KEY: 'your-key-here',
+   RORK_APP_SECRET: 'your-secret-here',
+   ```
+
+2. Update `services/config.js` with the same keys
+
+3. **Important for Vercel deployment:** 
+   - Set the same environment variables in your Vercel project settings
+   - Make sure `services/api-keys.js` is in your `.gitignore` file
+
+4. **For local development:**
+   - Update the `.env` file with all required API keys and endpoints
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.

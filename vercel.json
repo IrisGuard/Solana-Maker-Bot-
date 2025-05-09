@@ -8,5 +8,13 @@
     { "source": "/greek-bot-control", "destination": "/greek-bot-control" },
     { "source": "/(.*)", "destination": "/$1" }
   ],
-  "trailingSlash": false
+  "trailingSlash": false,
+  "env": {
+    "NODE_ENV": "production",
+    "NEXT_PUBLIC_API_URL": "/api"
+  },
+  "github": {
+    "silent": true,
+    "autoAlias": true
+  }
 }

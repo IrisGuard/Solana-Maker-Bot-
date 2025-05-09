@@ -5,9 +5,9 @@ export const CONFIG = {
   // Solana RPC Endpoints
   SOLANA_RPC_ENDPOINT: 'https://api.mainnet-beta.solana.com',
   
-  // API Keys - Προσθέστε τα δικά σας κλειδιά
-  RORK_APP_KEY: '', // Προσθέστε το API Key εδώ
-  RORK_APP_SECRET: '', // Προσθέστε το API Secret εδώ
+  // API Keys - Ενημερωμένα κλειδιά από το api-keys.js
+  RORK_APP_KEY: 'το-κλειδί-σας-εδώ', // Ενημερώστε με το πραγματικό κλειδί
+  RORK_APP_SECRET: 'το-μυστικό-σας-εδώ', // Ενημερώστε με το πραγματικό μυστικό
   
   // Jupiter API
   JUPITER_API_ENDPOINT: 'https://quote-api.jup.ag/v6',
@@ -83,6 +83,17 @@ export const setApiKeys = (rorkAppKey, rorkAppSecret) => {
 export const getApiKeys = () => {
   if (typeof window !== 'undefined') {
     try {
+      // Πρώτα έλεγχος για περιβαλλοντικές μεταβλητές (Vercel)
+      if (typeof process !== 'undefined' && process.env) {
+        const envRorkKey = process.env.RORK_APP_KEY;
+        const envRorkSecret = process.env.RORK_APP_SECRET;
+        
+        if (envRorkKey && envRorkSecret) {
+          return { rorkAppKey: envRorkKey, rorkAppSecret: envRorkSecret };
+        }
+      }
+      
+      // Αν δεν βρέθηκαν περιβαλλοντικές μεταβλητές, έλεγχος localStorage
       const encryptedRorkKey = localStorage.getItem('rork_key');
       const encryptedRorkSecret = localStorage.getItem('rork_secret');
       

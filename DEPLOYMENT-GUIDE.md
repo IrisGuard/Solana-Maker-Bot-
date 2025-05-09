@@ -55,4 +55,31 @@
    npm install next@latest --save
    ```
 
-3. Ενημερώστε το αρχείο `.github/dependabot.yml` ώστε να επιτρέπει τις νεότερες εκδόσεις. 
+3. Ενημερώστε το αρχείο `.github/dependabot.yml` ώστε να επιτρέπει τις νεότερες εκδόσεις.
+
+## Ρύθμιση API Keys για Vercel
+
+Για να λειτουργήσει σωστά η εφαρμογή στο Vercel, πρέπει να ρυθμίσετε τις μεταβλητές περιβάλλοντος:
+
+1. Στο dashboard του Vercel, πηγαίνετε στο project σας
+2. Επιλέξτε "Settings" > "Environment Variables"
+3. Προσθέστε τις παρακάτω μεταβλητές:
+   - `RORK_APP_KEY`: Το κλειδί API από το rork.app
+   - `RORK_APP_SECRET`: Το μυστικό API από το rork.app
+   - `EXPO_PUBLIC_SUPABASE_URL`: URL της Supabase
+   - `EXPO_PUBLIC_SUPABASE_ANON_KEY`: Ανώνυμο κλειδί Supabase
+   - `EXPO_PUBLIC_SOLANA_RPC_ENDPOINTS`: Τα endpoints του Solana RPC
+   - Όλες τις υπόλοιπες μεταβλητές από το `.env` αρχείο
+
+4. Πατήστε "Save" για να αποθηκεύσετε τις μεταβλητές
+
+5. Κάντε redeploy την εφαρμογή για να εφαρμοστούν οι αλλαγές
+
+## Ασφάλεια GitHub
+
+Για να αποφύγετε τη διαρροή ευαίσθητων πληροφοριών στο GitHub:
+
+1. Βεβαιωθείτε ότι το `services/api-keys.js` είναι στο `.gitignore`
+2. Μην ανεβάζετε το αρχείο `.env` με πραγματικά κλειδιά
+3. Χρησιμοποιήστε τα GitHub Secrets για CI/CD workflows
+4. Σκεφτείτε τη χρήση Vercel CLI για τοπικές δοκιμές με τις ίδιες μεταβλητές περιβάλλοντος 
