@@ -25,6 +25,53 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Button styles */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #9945FF;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #8035e0;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background-color: #333333;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #444444;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.card {
+  background-color: #1e1e1e;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 /* Custom scrollbar for dark mode */
 ::-webkit-scrollbar {
   width: 10px;

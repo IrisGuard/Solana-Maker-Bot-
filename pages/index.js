@@ -57,32 +57,32 @@ export default function Home() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          <div className="bg-white shadow-md rounded-lg p-8 flex flex-col items-center">
+          <div className="card">
             <h2 className="text-2xl font-bold mb-4">Ελληνική Έκδοση</h2>
             <p className="mb-6 text-center">
               Χρησιμοποιήστε την εφαρμογή με ελληνικό περιβάλλον χρήστη.
             </p>
             <Link href="/greek-dashboard">
-              <a className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold">
+              <a className="btn btn-primary w-full block text-center">
                 Είσοδος στην Ελληνική Έκδοση
               </a>
             </Link>
           </div>
 
-          <div className="bg-white shadow-md rounded-lg p-8 flex flex-col items-center">
+          <div className="card">
             <h2 className="text-2xl font-bold mb-4">English Version</h2>
             <p className="mb-6 text-center">
               Use the application with English user interface.
             </p>
             <Link href="/dashboard">
-              <a className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold">
+              <a className="btn btn-primary w-full block text-center">
                 Enter English Version
               </a>
             </Link>
           </div>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-4xl">
+        <div className="card w-full max-w-4xl">
           <h2 className="text-2xl font-bold mb-4 text-center">Γρήγορη Πρόσβαση / Quick Access</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
