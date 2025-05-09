@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: false,
   experimental: {
     transpilePackages: [
-      'react-native',
       'react-native-web',
       '@react-native-async-storage/async-storage'
     ],
