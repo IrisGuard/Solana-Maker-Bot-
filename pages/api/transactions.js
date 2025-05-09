@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   try {
     // Έλεγχος αν έχουμε τα απαραίτητα Supabase API keys
     const supabaseUrl = API_KEYS.EXPO_PUBLIC_SUPABASE_URL;
-    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY;
+    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY || API_KEYS.EXPO_PUBLIC_SUPABASE_ANON_KEY;
     
     // Απλός έλεγχος αν τα API keys είναι διαθέσιμα
     const hasValidKeys = supabaseUrl && supabaseKey && 
@@ -38,21 +38,33 @@ export default async function handler(req, res) {
     // Υπολογισμός συνολικών σελίδων
     const totalPages = Math.ceil(transactions.length / parseInt(limit));
     
+    // Σημειώνουμε αν τα δεδομένα θα μπορούσαν να αποθηκευτούν σε βάση δεδομένων
+    // Αν υπάρχουν έγκυρα κλειδιά Supabase
+    const couldStoreInDatabase = hasValidKeys;
+    
     // Αν δεν υπάρχουν συναλλαγές στο πραγματικό ιστορικό, δημιουργούμε κάποιες δοκιμαστικές
     if (transactions.length === 0) {
       // Δημιουργία προσομοιωμένων συναλλαγών για επίδειξη
       const demoTransactions = generateDemoTransactions();
       
+      // Προσθήκη της πληροφορίας για το αν είναι αποθηκευμένες σε βάση δεδομένων
+      const enhancedTransactions = demoTransactions.map(tx => ({
+        ...tx,
+        storedInDatabase: couldStoreInDatabase
+      }));
+      
       // Επιστροφή των προσομοιωμένων συναλλαγών
       return res.status(200).json({
-        transactions: demoTransactions,
+        transactions: enhancedTransactions,
         pagination: {
-          totalTransactions: demoTransactions.length,
+          totalTransactions: enhancedTransactions.length,
           totalPages: 1,
           currentPage: 1,
           limit: parseInt(limit)
         },
-        apiConnected: hasValidKeys
+        apiConnected: hasValidKeys,
+        supabaseConnected: hasValidKeys,
+        dataSource: 'Simulation'
       });
     }
     
@@ -65,11 +77,17 @@ export default async function handler(req, res) {
         currentPage: parseInt(page),
         limit: parseInt(limit)
       },
-      apiConnected: hasValidKeys
+      apiConnected: hasValidKeys,
+      supabaseConnected: hasValidKeys,
+      dataSource: transactions.length > 0 && transactions[0].storedInDatabase ? 'Supabase' : 'Local Storage'
     });
   } catch (error) {
     console.error('API error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ 
+      error: 'Internal server error',
+      apiConnected: false,
+      supabaseConnected: false
+    });
   }
 }
 

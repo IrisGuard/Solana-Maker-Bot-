@@ -2,12 +2,20 @@ import { API_KEYS } from '../../services/api-keys';
 
 export default async function handler(req, res) {
   try {
-    // Χρήση των CoinGecko API για πραγματικές τιμές αν υπάρχει το κλειδί
-    if (API_KEYS.EXPO_PUBLIC_COINGECKO_API_KEY) {
+    // Χρήση των CoinGecko API για πραγματικές τιμές
+    const coingeckoApiUrl = API_KEYS.EXPO_PUBLIC_COINGECKO_API_URL;
+    const coingeckoApiKey = API_KEYS.EXPO_PUBLIC_COINGECKO_API_KEY;
+    
+    // Έλεγχος αν υπάρχουν τα απαραίτητα API keys
+    const hasValidKeys = coingeckoApiUrl && coingeckoApiKey && 
+                         coingeckoApiUrl.includes('coingecko.com') && 
+                         coingeckoApiKey.startsWith('CG-');
+    
+    if (hasValidKeys) {
       try {
         // Fetch SOL price from CoinGecko
         const solResponse = await fetch(
-          `${API_KEYS.EXPO_PUBLIC_COINGECKO_API_URL}/simple/price?ids=solana&vs_currencies=usd&include_24hr_change=true&x_cg_api_key=${API_KEYS.EXPO_PUBLIC_COINGECKO_API_KEY}`
+          `${coingeckoApiUrl}/simple/price?ids=solana&vs_currencies=usd&include_24hr_change=true&x_cg_api_key=${coingeckoApiKey}`
         );
         
         if (!solResponse.ok) throw new Error('CoinGecko API error');
@@ -26,7 +34,9 @@ export default async function handler(req, res) {
           hpepe: {
             price: hpepePrice,
             change: (Math.random() * 10 - 5).toFixed(2)
-          }
+          },
+          apiConnected: true,
+          dataSource: 'CoinGecko API'
         });
         return;
       } catch (error) {
@@ -47,10 +57,15 @@ export default async function handler(req, res) {
       hpepe: {
         price: hpepePrice,
         change: (Math.random() * 10 - 5).toFixed(2)
-      }
+      },
+      apiConnected: false,
+      dataSource: 'Simulation'
     });
   } catch (error) {
     console.error('API error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ 
+      error: 'Internal server error',
+      apiConnected: false
+    });
   }
 } 

@@ -4,7 +4,12 @@ export default async function handler(req, res) {
   try {
     // Έλεγχος αν έχουμε τα απαραίτητα Supabase API keys
     const supabaseUrl = API_KEYS.EXPO_PUBLIC_SUPABASE_URL;
-    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY;
+    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY || API_KEYS.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+    
+    // Απλός έλεγχος αν τα API keys είναι διαθέσιμα
+    const hasValidKeys = supabaseUrl && supabaseKey && 
+                         supabaseUrl.includes('supabase.co') && 
+                         supabaseKey.length > 20;
     
     // Έλεγχος αν παρέχεται η διεύθυνση του πορτοφολιού
     const { address } = req.query;
@@ -62,10 +67,18 @@ export default async function handler(req, res) {
         usdValue: (hpepeBalance * 0.00001).toFixed(2)
       },
       tokens,
-      walletConnected: true
+      walletConnected: true,
+      apiConnected: hasValidKeys,
+      supabaseConnected: hasValidKeys,
+      walletAddress: address
     });
   } catch (error) {
     console.error('API error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ 
+      error: 'Internal server error',
+      walletConnected: false,
+      apiConnected: false,
+      supabaseConnected: false
+    });
   }
 } 

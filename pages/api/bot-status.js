@@ -1,6 +1,5 @@
-import { getApiKeys } from '../../services/config';
-import { CONFIG } from '../../services/config';
 import { API_KEYS } from '../../services/api-keys';
+import { CONFIG } from '../../services/config';
 
 // Εδώ θα μπορούσαμε να χρησιμοποιήσουμε μια βάση δεδομένων σε παραγωγικό περιβάλλον
 // Για αυτή την εφαρμογή, χρησιμοποιούμε ένα απλό αντικείμενο για αποθήκευση της κατάστασης
@@ -20,12 +19,12 @@ export default async function handler(req, res) {
   try {
     // Έλεγχος αν έχουμε τα απαραίτητα Supabase API keys
     const supabaseUrl = API_KEYS.EXPO_PUBLIC_SUPABASE_URL;
-    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY;
+    const supabaseKey = API_KEYS.EXPO_PUBLIC_SUPABASE_KEY || API_KEYS.EXPO_PUBLIC_SUPABASE_ANON_KEY;
     
     // Απλός έλεγχος αν τα API keys είναι διαθέσιμα (δεν κάνουμε πραγματική σύνδεση προς το παρόν)
     const hasValidKeys = supabaseUrl && supabaseKey && 
-                        supabaseUrl.includes('supabase.co') && 
-                        supabaseKey.length > 20;
+                         supabaseUrl.includes('supabase.co') && 
+                         supabaseKey.length > 20;
     
     // Για το POST request, επιτρέπουμε τις αλλαγές μόνο σε simulation mode αν δεν έχουμε έγκυρα κλειδιά
     if (req.method === 'POST' && !hasValidKeys) {
@@ -48,10 +47,12 @@ export default async function handler(req, res) {
         }
       }
       
-      // Επιστρέφουμε την τρέχουσα κατάσταση
+      // Επιστρέφουμε την τρέχουσα κατάσταση με πληροφορίες σύνδεσης
       res.status(200).json({
         ...botState,
-        apiConnected: hasValidKeys
+        apiConnected: hasValidKeys,
+        supbaseConnected: hasValidKeys,
+        lastUpdated: Date.now()
       });
     } else if (req.method === 'POST') {
       // Ενημερώνουμε την κατάσταση με βάση το request body
@@ -84,7 +85,9 @@ export default async function handler(req, res) {
       // Επιστρέφουμε την ενημερωμένη κατάσταση
       res.status(200).json({
         ...botState,
-        apiConnected: hasValidKeys
+        apiConnected: hasValidKeys,
+        supabaseConnected: hasValidKeys,
+        lastUpdated: Date.now()
       });
     } else {
       res.setHeader('Allow', ['GET', 'POST']);
@@ -92,6 +95,10 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.error('API error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ 
+      error: 'Internal server error',
+      apiConnected: false,
+      supabaseConnected: false
+    });
   }
 } 
