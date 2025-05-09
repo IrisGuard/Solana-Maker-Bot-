@@ -1,6 +1,7 @@
 {
   "name": "solana-maker-bot",
   "version": "1.0.0",
+  "description": "Solana Maker Bot Web Application",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -8,12 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "next": "12.3.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "axios": "^0.27.2"
+    "react-native": "^0.70.0",
+    "react-native-web": "^0.18.0",
+    "@react-native-async-storage/async-storage": "^1.17.10",
+    "@solana/web3.js": "^1.87.6",
+    "@jup-ag/api": "^6.0.12",
+    "bs58": "^5.0.0"
   },
   "devDependencies": {
+    "@swc/cli": "^0.7.5",
+    "@swc/core": "^1.11.24",
     "@types/node": "^18.11.9",
     "@types/react": "^17.0.52",
     "eslint": "^8.27.0",

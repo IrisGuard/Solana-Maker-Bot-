@@ -1,53 +1,38 @@
-<<<<<<< HEAD
 # Solana Maker Bot
 
 Automate your Solana trading with Solana Maker Bot. Create, manage, and monitor trading bots on the Solana blockchain.
 
 ## Features
 
-- Connect Solana wallets
-- Real-time price and balance monitoring
-- Automated transactions with customizable parameters
-- Simulation mode for safe testing
-- Multiple token management
-- Transaction history tracking
+- Automated trading bot creation
+- Real-time monitoring of bot performance
+- Multiple wallet support
+- Simulation mode for testing strategies
+- Transaction history and analytics
 
-## Getting Started
+## Development
 
-### Prerequisites
+```bash
+# Install dependencies
+npm install
 
-- Node.js 16+
-- Expo CLI
+# Start development server
+npm run dev
 
-### Installation
+# Build for production
+npm run build
 
-1. Clone the repository
-2. Install dependencies:
-   ```
-   npm install
-   ```
-3. Start the development server:
-   ```
-   npm start
-   ```
-   Or use the provided scripts:
-   - Windows: `start-project.bat`
-   - PowerShell: `start-project.ps1`
+# Start production server
+npm start
+```
 
-## Publishing and Sharing
+## Deployment
 
-To publish the app and create a shareable link for collaborators:
+For deployment instructions and troubleshooting, see [DEPLOYMENT-GUIDE.md](./DEPLOYMENT-GUIDE.md).
 
-1. Run the publish script:
-   - Windows: `publish-app.bat`
-   - PowerShell: `publish-app.ps1`
-
-2. Share the generated link with your collaborators:
-   ```
-   https://expo.dev/@solanamakerbot/solana-maker-bot
-   ```
-
-Note: Collaborators will need an Expo account and need to be added to your project to access the published app.
+Key points:
+- Use React 17.0.2 with Next.js 12.3.4 for compatibility
+- Follow Dependabot configuration in `.github/dependabot.yml`
 
 ## Environment Variables
 
@@ -64,6 +49,3 @@ Copy `.env.example` to `.env` and configure the following variables:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-=======
-# Solana-Maker-Bot-
->>>>>>> 3a56f5b9c8f05c7bfb92922a3d6957bc35a03056

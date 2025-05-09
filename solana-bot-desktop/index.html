@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solana Maker Bot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>Solana Maker Bot</h1>
+      <div class="wallet-info" id="wallet-info">
+        <button id="connect-wallet" class="button">Connect Wallet</button>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-button active" data-tab="dashboard">Dashboard</button>
+      <button class="tab-button" data-tab="bot-control">Bot Control</button>
+      <button class="tab-button" data-tab="wallets">Wallets</button>
+      <button class="tab-button" data-tab="tokens">Tokens</button>
+      <button class="tab-button" data-tab="transactions">Transactions</button>
+      <button class="tab-button" data-tab="settings">Settings</button>
+    </div>
+
+    <main class="app-content">
+      <!-- Dashboard Tab -->
+      <section class="tab-content active" id="dashboard">
+        <div class="dashboard-grid">
+          <!-- Bot Status Card -->
+          <div class="status-card">
+            <h2>Bot Status</h2>
+            <div class="status-badge" id="bot-status-badge">Inactive</div>
+            <button class="button primary" id="toggle-bot">Start Bot</button>
+            <div class="status-meta">
+              <div class="status-meta-item">
+                <span>Simulation Mode:</span>
+                <span id="simulation-mode-value">Enabled</span>
+              </div>
+              <div class="status-meta-item">
+                <span>Makers:</span>
+                <span id="makers-value">100</span>
+              </div>
+              <div class="status-meta-item">
+                <span>Transactions:</span>
+                <span id="transactions-value">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price Cards -->
+          <div class="price-cards">
+            <div class="price-card">
+              <h2>Solana (SOL)</h2>
+              <div class="price" id="sol-price">$0.00</div>
+              <div class="price-change" id="sol-change">0.00%</div>
+            </div>
+            
+            <div class="price-card">
+              <h2>HPEPE</h2>
+              <div class="price" id="hpepe-price">$0.00000000</div>
+              <div class="price-change" id="hpepe-change">0.00%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="activity-log">
+          <h2>Activity Log</h2>
+          <div class="log-container" id="activity-log-container">
+            <div class="log-entry">System initialized. Ready for operations.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bot Control Tab -->
+      <section class="tab-content" id="bot-control">
+        <div class="section-header">
+          <h2>Bot Control Panel</h2>
+          <p>Configure and manage your trading bots.</p>
+        </div>
+        
+        <div class="bot-settings">
+          <h3>Bot Configuration</h3>
+          <form id="bot-settings-form">
+            <div class="form-group">
+              <label for="makers">Number of Makers</label>
+              <input type="number" id="makers" name="makers" value="100">
+            </div>
+            <div class="form-group">
+              <label for="min-delay">Min Delay (seconds)</label>
+              <input type="number" id="min-delay" name="minDelay" value="30">
+            </div>
+            <div class="form-group">
+              <label for="max-delay">Max Delay (seconds)</label>
+              <input type="number" id="max-delay" name="maxDelay" value="50">
+            </div>
+            <div class="form-group">
+              <label for="target-price">Target Price ($)</label>
+              <input type="number" id="target-price" name="targetPrice" value="0.0001" step="0.00000001">
+            </div>
+            <div class="form-group">
+              <label for="hpepe-amount">HPEPE Amount per Transaction</label>
+              <input type="number" id="hpepe-amount" name="hpepeAmount" value="2000">
+            </div>
+            <div class="form-group">
+              <label for="sol-amount">SOL Amount per Transaction</label>
+              <input type="number" id="sol-amount" name="solAmount" value="0.175" step="0.001">
+            </div>
+            <div class="form-group">
+              <label for="token-action">Token Action</label>
+              <select id="token-action" name="tokenAction">
+                <option value="sell">Sell</option>
+                <option value="return">Return</option>
+              </select>
+            </div>
+            <div class="form-group checkbox">
+              <input type="checkbox" id="burn-small" name="burnSmallAmounts" checked>
+              <label for="burn-small">Burn Small Amounts</label>
+            </div>
+            <div class="form-group checkbox">
+              <input type="checkbox" id="collect-large" name="collectLargeAmounts" checked>
+              <label for="collect-large">Collect Large Amounts</label>
+            </div>
+            
+            <button type="submit" class="button primary">Save Configuration</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Wallets Tab -->
+      <section class="tab-content" id="wallets">
+        <div class="section-header">
+          <h2>Wallet Management</h2>
+          <p>Create and manage your maker wallets.</p>
+        </div>
+        
+        <div class="wallet-controls">
+          <div class="form-group">
+            <label for="wallet-count">Number of Wallets to Create</label>
+            <input type="number" id="wallet-count" value="5" min="1" max="100">
+          </div>
+          <button class="button primary" id="create-wallets">Create Wallets</button>
+        </div>
+        
+        <div class="wallet-list-container">
+          <h3>Your Wallets</h3>
+          <div class="wallet-stats">
+            <div class="stat-item">
+              <span class="stat-label">Total Wallets:</span>
+              <span class="stat-value" id="total-wallets">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total SOL:</span>
+              <span class="stat-value" id="total-sol">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total HPEPE:</span>
+              <span class="stat-value" id="total-hpepe">0</span>
+            </div>
+          </div>
+          <div class="wallet-list" id="wallet-list">
+            <!-- Wallets will be added here dynamically -->
+            <div class="empty-state">No wallets created yet. Use the form above to create wallets.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tokens Tab -->
+      <section class="tab-content" id="tokens">
+        <div class="section-header">
+          <h2>Token Management</h2>
+          <p>Monitor and manage your Solana tokens.</p>
+        </div>
+        
+        <div class="token-list" id="token-list">
+          <!-- Tokens will be added here dynamically -->
+        </div>
+        
+        <div class="jupiter-section">
+          <h3>Jupiter Swap</h3>
+          <p>Swap tokens using Jupiter Aggregator for the best rates.</p>
+          
+          <div class="jupiter-swap-form">
+            <div class="form-group">
+              <label for="from-token">From</label>
+              <select id="from-token">
+                <option value="SOL">SOL</option>
+                <option value="HPEPE">HPEPE</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="swap-amount">Amount</label>
+              <input type="number" id="swap-amount" value="0.1" step="0.001">
+            </div>
+            
+            <div class="form-group">
+              <label for="to-token">To</label>
+              <select id="to-token">
+                <option value="HPEPE">HPEPE</option>
+                <option value="SOL">SOL</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="wallet-select">Wallet</label>
+              <select id="wallet-select">
+                <option value="">Select a wallet</option>
+                <!-- Wallets will be added here dynamically -->
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="delayed-swap">Delayed Swap</label>
+              <input type="checkbox" id="delayed-swap">
+              <input type="number" id="delay-seconds" value="40" min="30" max="50" class="hidden">
+            </div>
+            
+            <button class="button primary" id="execute-swap">Swap</button>
+          </div>
+          
+          <div class="swap-routes hidden" id="swap-routes">
+            <h4>Available Routes</h4>
+            <div class="routes-list" id="routes-list">
+              <!-- Routes will be added here dynamically -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Transactions Tab -->
+      <section class="tab-content" id="transactions">
+        <div class="section-header">
+          <h2>Transaction History</h2>
+          <p>View your transaction history.</p>
+        </div>
+        
+        <div class="transaction-filters">
+          <div class="form-group">
+            <label for="transaction-filter">Filter</label>
+            <select id="transaction-filter">
+              <option value="all">All Transactions</option>
+              <option value="buy">Buy Only</option>
+              <option value="sell">Sell Only</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="wallet-filter">Wallet</label>
+            <select id="wallet-filter">
+              <option value="all">All Wallets</option>
+              <!-- Wallets will be added here dynamically -->
+            </select>
+          </div>
+        </div>
+        
+        <div class="transaction-list" id="transaction-list">
+          <!-- Transactions will be added here dynamically -->
+          <div class="empty-state">No transactions yet.</div>
+        </div>
+      </section>
+
+      <!-- Settings Tab -->
+      <section class="tab-content" id="settings">
+        <div class="section-header">
+          <h2>Settings</h2>
+          <p>Configure your Solana Maker Bot settings.</p>
+        </div>
+        
+        <div class="settings-group">
+          <h3>General Settings</h3>
+          <div class="setting-item">
+            <span>Simulation Mode</span>
+            <div class="toggle" id="simulation-toggle">
+              <div class="toggle-switch active"></div>
+            </div>
+          </div>
+          <div class="setting-item">
+            <span>Auto Boost</span>
+            <div class="toggle" id="boost-toggle">
+              <div class="toggle-switch"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="settings-group">
+          <h3>API Configuration</h3>
+          <div class="form-group">
+            <label for="rpc-endpoint">Solana RPC Endpoint</label>
+            <input type="text" id="rpc-endpoint" value="https://api.mainnet-beta.solana.com">
+          </div>
+          
+          <div class="form-group">
+            <label for="jupiter-api-key">Jupiter API Key (Optional)</label>
+            <input type="text" id="jupiter-api-key" placeholder="Enter your Jupiter API key">
+          </div>
+          
+          <button class="button primary" id="save-settings">Save Settings</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html> 

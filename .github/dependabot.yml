@@ -1,0 +1,27 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Περιορισμός των αναβαθμίσεων για το Next.js σε εκδόσεις συμβατές με React 17
+    ignore:
+      - dependency-name: "next"
+        versions: [">=13.0.0"]
+    # Ρύθμιση των ορίων έκδοσης για τα βασικά πακέτα
+    allow:
+      - dependency-type: "direct"
+    commit-message:
+      prefix: "npm"
+      include: "scope"
+    # Ομαδοποίηση των ενημερώσεων με παρόμοιους τύπους εξαρτήσεων
+    groups:
+      react-packages:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "react-native*"
+      nextjs-packages:
+        patterns:
+          - "next"
+          - "eslint-config-next" 

@@ -1,0 +1,115 @@
+/* Basic styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #121212;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  flex: 1;
+}
+
+/* Typography */
+h1, h2, h3 {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.info-title {
+  font-size: 20px;
+}
+
+.feature-title {
+  font-size: 18px;
+  color: #9945FF;
+}
+
+/* Cards */
+.card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.wallet-card {
+  text-align: center;
+  padding: 30px;
+}
+
+.balance-label {
+  font-size: 16px;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+.balance-value {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #9945FF;
+}
+
+.fiat-value {
+  font-size: 16px;
+  color: #aaa;
+}
+
+.info-text {
+  color: #ddd;
+  line-height: 1.6;
+}
+
+.feature-text {
+  color: #ddd;
+  font-size: 14px;
+}
+
+.features-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .features-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+} 

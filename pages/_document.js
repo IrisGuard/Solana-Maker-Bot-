@@ -5,11 +5,16 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-          <meta name="description" content="Solana Maker Bot - Automate trading on Solana blockchain" />
+          <meta name="application-name" content="Solana Maker Bot" />
+          <meta name="description" content="Automated trading on Solana blockchain" />
+          <meta name="theme-color" content="#121212" />
           <link rel="icon" href="/favicon.ico" />
+          <link 
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" 
+            rel="stylesheet" 
+          />
         </Head>
-        <body style={{ margin: 0, padding: 0, backgroundColor: '#121212' }}>
+        <body>
           <Main />
           <NextScript />
         </body>

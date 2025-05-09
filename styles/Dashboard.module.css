@@ -1,0 +1,337 @@
+.container {
+  min-height: 100vh;
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.header {
+  padding: 1.5rem;
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  margin: 0 0 1.5rem 0;
+  color: #9945FF;
+}
+
+.navigation {
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.navButton {
+  background-color: transparent;
+  border: none;
+  color: #aaa;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.navButton:hover {
+  color: #fff;
+}
+
+.navButton.active {
+  color: #9945FF;
+  border-bottom: 2px solid #9945FF;
+}
+
+.main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Overview Tab */
+.overviewContainer {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+}
+
+.statusCard {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.statusCard h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #9945FF;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.active {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.inactive {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.paused {
+  background-color: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.startButton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.startButton:hover {
+  background-color: #3e8e41;
+}
+
+.stopButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.stopButton:hover {
+  background-color: #d32f2f;
+}
+
+.statusMeta {
+  margin-top: 1rem;
+}
+
+.statusMetaItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #333;
+}
+
+.statusMetaItem:last-child {
+  border-bottom: none;
+}
+
+.priceCards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.priceCard {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.priceCard h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #9945FF;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.priceChange {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.positive {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.negative {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+/* Bot Control Tab */
+.botsContainer {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.botSettings {
+  margin-top: 1.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #aaa;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.saveButton {
+  padding: 0.5rem 1rem;
+  background-color: #9945FF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.saveButton:hover {
+  background-color: #8035df;
+}
+
+/* Tokens Tab */
+.tokensContainer {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tokenList {
+  margin-top: 1.5rem;
+}
+
+.tokenItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.tokenItem:last-child {
+  border-bottom: none;
+}
+
+.tokenInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.tokenSymbol {
+  font-weight: bold;
+}
+
+.tokenName {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.tokenPrice {
+  font-weight: bold;
+}
+
+/* Settings Tab */
+.settingsContainer {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.settingGroup {
+  margin-bottom: 2rem;
+}
+
+.settingGroup h3 {
+  font-size: 1.1rem;
+  color: #9945FF;
+  margin-bottom: 1rem;
+}
+
+.settingItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #333;
+}
+
+.toggle {
+  width: 50px;
+  height: 24px;
+  background-color: #333;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+}
+
+.toggleSwitch {
+  width: 20px;
+  height: 20px;
+  background-color: #777;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all 0.2s ease;
+}
+
+.toggleSwitch.active {
+  background-color: #4caf50;
+  transform: translateX(26px);
+}
+
+@media (max-width: 768px) {
+  .overviewContainer {
+    grid-template-columns: 1fr;
+  }
+  
+  .navigation {
+    flex-wrap: wrap;
+  }
+  
+  .navButton {
+    flex: 1 0 auto;
+    text-align: center;
+  }
+} 

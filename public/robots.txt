@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: https://solana-maker-bot.vercel.app/sitemap.xml 

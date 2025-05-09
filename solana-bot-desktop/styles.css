@@ -1,0 +1,743 @@
+/* Basic styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #121212;
+  color: #fff;
+  line-height: 1.6;
+}
+
+/* App Container */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #333;
+  margin-bottom: 20px;
+}
+
+.app-header h1 {
+  font-size: 24px;
+  color: #9945FF;
+}
+
+.wallet-info {
+  display: flex;
+  align-items: center;
+}
+
+.wallet-connected {
+  background-color: #1e1e1e;
+  padding: 8px 16px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.wallet-address {
+  margin-right: 10px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.wallet-balance {
+  font-weight: bold;
+  color: #9945FF;
+  margin-right: 10px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #333;
+}
+
+.tab-button {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  padding: 10px 20px;
+  cursor: pointer;
+  position: relative;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.tab-button:hover {
+  color: #fff;
+}
+
+.tab-button.active {
+  color: #9945FF;
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #9945FF;
+}
+
+/* Tab Content */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Dashboard */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Status Card */
+.status-card {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.status-card h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #9945FF;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.status-badge.active {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.status-badge.paused {
+  background-color: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+}
+
+.status-meta {
+  margin-top: 15px;
+}
+
+.status-meta-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+}
+
+.status-meta-item:last-child {
+  border-bottom: none;
+}
+
+/* Price Cards */
+.price-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.price-card {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.price-card h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #9945FF;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.price-change {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.price-change.positive {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+/* Activity Log */
+.activity-log {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.activity-log h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #9945FF;
+}
+
+.log-container {
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #121212;
+  border-radius: 5px;
+}
+
+.log-entry {
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+  font-size: 14px;
+  color: #ddd;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+/* Bot Settings */
+.section-header {
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  font-size: 22px;
+  color: #9945FF;
+  margin-bottom: 5px;
+}
+
+.section-header p {
+  color: #aaa;
+}
+
+.bot-settings {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bot-settings h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #9945FF;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #aaa;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  background-color: #2c2c2c;
+  border: 1px solid #444;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.form-group.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.form-group.checkbox input {
+  width: auto;
+  margin-right: 10px;
+}
+
+/* Token List */
+.token-list {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.token-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #333;
+}
+
+.token-item:last-child {
+  border-bottom: none;
+}
+
+.token-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.token-symbol {
+  font-weight: bold;
+}
+
+.token-name {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.token-price {
+  font-weight: bold;
+}
+
+/* Settings */
+.settings-group {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.settings-group h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #9945FF;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+/* Toggle */
+.toggle {
+  width: 50px;
+  height: 24px;
+  background-color: #444;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle-switch {
+  width: 20px;
+  height: 20px;
+  background-color: #aaa;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all 0.3s;
+}
+
+.toggle-switch.active {
+  background-color: #4caf50;
+  transform: translateX(26px);
+}
+
+/* Buttons */
+.button {
+  display: inline-block;
+  padding: 10px 16px;
+  background-color: #2c2c2c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #444;
+}
+
+.button.primary {
+  background-color: #9945FF;
+  color: #fff;
+  font-weight: bold;
+}
+
+.button.primary:hover {
+  background-color: #8035df;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* Wallet Management */
+.wallet-controls {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+.wallet-list-container {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.wallet-list-container h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #9945FF;
+}
+
+.wallet-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #2c2c2c;
+  border-radius: 8px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.wallet-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.wallet-item {
+  background-color: #2c2c2c;
+  border-radius: 8px;
+  padding: 15px;
+  transition: transform 0.3s;
+}
+
+.wallet-item:hover {
+  transform: translateY(-3px);
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #444;
+}
+
+.wallet-address {
+  font-weight: bold;
+  color: #9945FF;
+}
+
+.wallet-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.wallet-balance {
+  padding: 10px 0;
+}
+
+.balance-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+
+/* Jupiter Swap */
+.jupiter-section {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.jupiter-section h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #9945FF;
+}
+
+.jupiter-swap-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.swap-routes {
+  background-color: #2c2c2c;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.swap-routes h4 {
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.route-item {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #444;
+  transition: border-color 0.3s;
+}
+
+.route-item.selected {
+  border-color: #9945FF;
+}
+
+.route-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #444;
+}
+
+.route-title {
+  font-weight: bold;
+  color: #fff;
+}
+
+.route-market {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.route-details {
+  margin-bottom: 15px;
+}
+
+.route-amount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.route-arrow {
+  color: #9945FF;
+}
+
+.route-impact {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Transaction History */
+.transaction-filters {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.transaction-list {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-item {
+  background-color: #2c2c2c;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.transaction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #444;
+}
+
+.transaction-type {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.transaction-type.buy {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.transaction-type.sell {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.transaction-time {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.transaction-details {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.transaction-wallet,
+.transaction-status {
+  display: flex;
+  justify-content: space-between;
+}
+
+.transaction-amount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.transaction-arrow {
+  color: #9945FF;
+}
+
+.transaction-link {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background-color: #444;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.transaction-link:hover {
+  background-color: #555;
+}
+
+.transaction-link.disabled {
+  background-color: #333;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.transaction-simulated {
+  background-color: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px;
+  color: #aaa;
+}
+
+/* Buttons */
+.button.small {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.button.danger {
+  background-color: #f44336;
+}
+
+.button.danger:hover {
+  background-color: #d32f2f;
+} 
