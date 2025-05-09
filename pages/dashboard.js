@@ -92,25 +92,25 @@ export default function Dashboard() {
         <h1>Solana Maker Bot</h1>
         <nav className={styles.navigation}>
           <button 
-            className={`${styles.navButton} ${activeTab === 'overview' ? styles.active : ''}`}
+            className={`btn ${activeTab === 'overview' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('overview')}
           >
             Overview
           </button>
           <button 
-            className={`${styles.navButton} ${activeTab === 'bots' ? styles.active : ''}`}
+            className={`btn ${activeTab === 'bots' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('bots')}
           >
             Bot Control
           </button>
           <button 
-            className={`${styles.navButton} ${activeTab === 'tokens' ? styles.active : ''}`}
+            className={`btn ${activeTab === 'tokens' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('tokens')}
           >
             Tokens
           </button>
           <button 
-            className={`${styles.navButton} ${activeTab === 'settings' ? styles.active : ''}`}
+            className={`btn ${activeTab === 'settings' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('settings')}
           >
             Settings
@@ -127,7 +127,7 @@ export default function Dashboard() {
                 {botData.status.toUpperCase()}
               </div>
               <button 
-                className={`${styles.button} ${botData.status === 'active' ? styles.stopButton : styles.startButton}`}
+                className={`btn ${botData.status === 'active' ? 'btn-secondary' : 'btn-primary'}`}
                 onClick={toggleBotStatus}
               >
                 {botData.status === 'active' ? 'Stop Bot' : 'Start Bot'}
@@ -191,7 +191,7 @@ export default function Dashboard() {
                 <label>Target Price ($)</label>
                 <input type="number" step="0.00000001" defaultValue={0.0001} />
               </div>
-              <button className={styles.saveButton}>Save Configuration</button>
+              <button className="btn btn-primary">Save Configuration</button>
             </div>
           </div>
         )}
@@ -248,7 +248,7 @@ export default function Dashboard() {
                 <label>Solana RPC Endpoint</label>
                 <input type="text" defaultValue="https://api.mainnet-beta.solana.com" />
               </div>
-              <button className={styles.saveButton}>Save Settings</button>
+              <button className="btn btn-primary">Save Settings</button>
             </div>
           </div>
         )}
