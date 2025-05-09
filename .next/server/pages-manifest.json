@@ -1,0 +1,11 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/api/token-price": "pages/api/token-price.js",
+  "/bot-control": "pages/bot-control.html",
+  "/_document": "pages/_document.js",
+  "/dashboard": "pages/dashboard.html",
+  "/": "pages/index.html",
+  "/api/bot-status": "pages/api/bot-status.js",
+  "/404": "pages/404.html"
+}

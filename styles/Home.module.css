@@ -177,4 +177,63 @@
   .grid {
     grid-template-columns: 1fr;
   }
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.controlButton {
+  display: inline-block;
+  background-color: #333333;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.controlButton:hover {
+  background-color: #444444;
+  text-decoration: none;
+}
+
+.cardLink {
+  display: inline-block;
+  color: #9945FF;
+  margin-top: 12px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.cardLink:hover {
+  text-decoration: underline;
+}
+
+.smallText {
+  font-size: 0.8rem;
+  color: #999999;
+  margin-top: 10px;
+}
+
+.footerNav {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.footerLink {
+  color: #AAAAAA;
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  color: #9945FF;
+  text-decoration: underline;
 } 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -52,51 +53,72 @@ export default function Home() {
 
         <div className={styles.statusContainer}>
           <div className={styles.statusCard}>
-            <div className={styles.statusHeader}>Bot Status</div>
+            <div className={styles.statusHeader}>Κατάσταση Bot</div>
             <div className={`${styles.statusValue} ${styles[botStatus]}`}>
-              {botStatus.toUpperCase()}
+              {botStatus === 'active' ? 'ΕΝΕΡΓΟ' : 'ΑΝΕΝΕΡΓΟ'}
             </div>
-            <button 
-              className={`${styles.button} ${botStatus === 'active' ? styles.stopButton : styles.startButton}`}
-              onClick={toggleBotStatus}
-            >
-              {botStatus === 'active' ? 'Stop Bot' : 'Start Bot'}
-            </button>
+            
+            <div className={styles.buttonGroup}>
+              <button 
+                className={`${styles.button} ${botStatus === 'active' ? styles.stopButton : styles.startButton}`}
+                onClick={toggleBotStatus}
+              >
+                {botStatus === 'active' ? 'Διακοπή Bot' : 'Εκκίνηση Bot'}
+              </button>
+              
+              <Link href="/bot-control">
+                <a className={styles.controlButton}>Προχωρημένες Ρυθμίσεις</a>
+              </Link>
+            </div>
           </div>
         </div>
 
         <div className={styles.grid}>
           <div className={styles.card}>
-            <h2>Solana Price</h2>
+            <h2>Τιμή Solana</h2>
             <p className={styles.priceValue}>${solanaPrice.toFixed(2)}</p>
           </div>
 
           <div className={styles.card}>
-            <h2>HPEPE Price</h2>
+            <h2>Τιμή HPEPE</h2>
             <p className={styles.priceValue}>${hpepePrice.toFixed(8)}</p>
           </div>
 
           <div className={styles.card}>
-            <h2>Maker Configuration</h2>
-            <p>Number of makers: 100</p>
-            <p>Min delay: 5 seconds</p>
-            <p>Max delay: 10 seconds</p>
+            <h2>Ρυθμίσεις Bot</h2>
+            <p>Πλήθος makers: 100</p>
+            <p>Ελάχιστη καθυστέρηση: 5 δευτερόλεπτα</p>
+            <p>Μέγιστη καθυστέρηση: 10 δευτερόλεπτα</p>
+            
+            <Link href="/bot-control">
+              <a className={styles.cardLink}>Επεξεργασία ρυθμίσεων →</a>
+            </Link>
           </div>
 
           <div className={styles.card}>
-            <h2>Simulation Mode</h2>
+            <h2>Λειτουργία Προσομοίωσης</h2>
             <div className={styles.toggleContainer}>
-              <span>Enabled</span>
+              <span>Ενεργή</span>
               <div className={styles.toggle}>
                 <div className={styles.toggleButton}></div>
               </div>
             </div>
+            <p className={styles.smallText}>
+              Στη λειτουργία προσομοίωσης δεν πραγματοποιούνται πραγματικές συναλλαγές
+            </p>
           </div>
         </div>
       </main>
 
       <footer className={styles.footer}>
-        <p>Solana Maker Bot - Automated Trading</p>
+        <p>Solana Maker Bot - Αυτοματοποιημένες Συναλλαγές</p>
+        
+        <nav className={styles.footerNav}>
+          <Link href="/"><a className={styles.footerLink}>Αρχική</a></Link>
+          <Link href="/bot-control"><a className={styles.footerLink}>Έλεγχος Bot</a></Link>
+          <Link href="/tokens"><a className={styles.footerLink}>Tokens</a></Link>
+          <Link href="/transactions"><a className={styles.footerLink}>Συναλλαγές</a></Link>
+        </nav>
       </footer>
     </div>
   );
