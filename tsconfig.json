@@ -20,8 +20,15 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "pages/**/*.ts",
+    "pages/**/*.tsx",
+    "pages/**/*.js",
+    "pages/**/*.jsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "app_disabled",
+    "app",
+    "backend"
+  ]
 }
