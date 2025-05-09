@@ -1,11 +1,14 @@
 {
+  "/_document": "pages/_document.js",
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
+  "/api/bot-status": "pages/api/bot-status.js",
   "/api/token-price": "pages/api/token-price.js",
   "/bot-control": "pages/bot-control.html",
-  "/_document": "pages/_document.js",
   "/dashboard": "pages/dashboard.html",
   "/": "pages/index.html",
-  "/api/bot-status": "pages/api/bot-status.js",
+  "/settings": "pages/settings.html",
+  "/tokens": "pages/tokens.html",
+  "/transactions": "pages/transactions.html",
   "/404": "pages/404.html"
 }
